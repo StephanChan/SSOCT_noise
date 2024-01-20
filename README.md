@@ -31,12 +31,16 @@ Now what about shot noise of ref arm.
 
 shot noise of power P is sqrt(P*t/hv)*hv = sqrt(P*t*hv), unit is J, for 15uW at 1064nm, photon energy is about 2*e-19 J, when sampling at 500MHz, the shot noise is sqrt(15e-6(W) *1/500e6(s) * (2e-19J)) =sqrt(6e-33) = 0.77e-16 J, note that power is P*t = 15e-6/500e6=3e-14, so noise is about 0.25% of power, i.e., 0.0375uW
 
-calculating shot noise at unit of J/sqrt(s), shot noise = sqrt(P/hv)*hv, for 15uW at 1064uW, the shot noise is sqrt(15e-6*2e-19) = sqrt(3e-24) = 1.7e-12 J/sqrt(s), to get the value in unit W, we need to multiply the sqrt root of sampling frequency, 1.7e-12*sqrt(500e6) = 3.8e-8W = 0.038uW , same result  
+calculating shot noise at unit of J/sqrt(s), or more frequently used, W/sqrt(Hz), shot noise = sqrt(P/hv)*hv, for 15uW at 1064uW, the shot noise is sqrt(15e-6*2e-19) = sqrt(3e-24) = 1.7e-12  W/sqrt(Hz), to get the value in unit W, we need to multiply the sqrt root of sampling frequency, 1.7e-12*sqrt(500e6) = 3.8e-8W = 0.038uW , same result  
 
-Now if the balanced detector saturates at 157uW, 0.0375uW will have a digital value of 0.98 over range of 4095, which, is even smaller than digitizer noise.
+Thorlabs balanced detector has a noise equivilent power (NEP) at about 10pW/sqrt(Hz), which is almost 10 times higher than the shot noise at 15uW. To get NEP level shot noise, you will need about 100 times higher light power (noise is linear to the sqrt of power), which is 1500uW!!!!!!!!!!!!!!!!!!
+
+Now consider a second balanced detector that saturates at 157uW, 0.0375uW will have a digital value of 0.98 over range of 4095, which, is even smaller than digitizer noise!!!!!!!!!!!!!!!!!
 
 So to get shot noise equivalent than digitizer + detector noise (22 digits), the shot noise needs to be 22 times larger, so the ref arm power need to be 22^2 times higher, which is 7260uW, which is much higher than the saturation limit of balanced detector.
 
 So, SSOCT system using balanced detector and digitizer is NEVER SHOT NOISE LIMITED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Literature agreement can be found at https://www.nature.com/articles/s41598-017-01339-6, and cite" For example, standard photodiodes used in the traditional OCT systems at 1300 nm, need a reference power in the order of few miliwatts to approach close to shot-noise-limited sensitivities"
 
 
