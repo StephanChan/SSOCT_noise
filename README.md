@@ -27,6 +27,13 @@ So get back to noise in SSOCT system, the system noise before FFT was 0.0054, if
 
 The SSPSOCT system I built at BU has about 4e-5 system noise
 
+
+
+
+
+
+
+
 Now what about shot noise of ref arm.
 
 shot noise of power P is sqrt(P*t/hv)*hv = sqrt(P*t*hv), unit is J, for 15uW at 1064nm, photon energy is about 2*e-19 J, when sampling at 500MHz, the shot noise is sqrt(15e-6(W) *1/500e6(s) * (2e-19J)) =sqrt(6e-33) = 0.77e-16 J, note that power is P*t = 15e-6/500e6=3e-14, so noise is about 0.25% of power, i.e., 0.0375uW
