@@ -11,36 +11,53 @@ import matplotlib.pyplot as plt
 
 L=1024
 
-data = np.sin(np.arange(0,100*pi,100*pi/L))
-data = np.tile(data,[1000,1])
+signal = np.sin(np.arange(0,100*pi,100*pi/L))
+signal = np.tile(signal,[100,1])
+noise = np.random.rand(100,L)/10-0.05
+plt.figure()
+plt.plot(signal[0]+noise[0])
+plt.title('original signal')
+plt.show()
 
-noise = np.random.rand(data.shape[0],L)*0.2
+fs = np.fft.fft((noise+signal),axis = 1)/L
+plt.figure()
+plt.plot(np.abs(fs[0]))
+plt.title('fft signal')
+plt.show()
 
-std1=np.std(noise,0)
+signal_ifft = np.fft.ifft(fs,axis = 1)*L
+plt.figure()
+plt.plot(signal_ifft[0].real)
+plt.title('ifft signal')
+plt.show()
 
-# plt.figure()
-# data = data + noise
-# for ii in range(0,1000,10):
-#     plt.plot(data[ii,:])
-# plt.title('original data')
 
-# plt.figure()
-# plt.plot(std1)
-# plt.title('std before fft')
+ratios_std = np.zeros(6)
+ratios_signal = np.zeros(6)
+for ii, L in enumerate([256,512,1024,1560,2048,4096]):
+    signal = np.sin(np.arange(0,100*pi,100*pi/L))
+    signal = np.tile(signal,[100,1])
+    noise = np.random.rand(100,L)/10-0.05
+    std1=np.std(noise,0)
+    
+    fs = np.fft.fft((noise+signal),axis = 1)/L
+    
+    peak = np.max(np.abs(fs[0]))
+    ratios_signal[ii] = peak
+    fs[np.abs(fs)>0.1]=0
+    
+    std2=np.std(np.abs(fs),0)
+    ratio = np.mean(std2)/np.mean(std1)
+    ratios_std[ii] = ratio
 
-fs = np.fft.fft((data+noise),axis = 1)/L
-std2=np.std(np.abs(fs),0)
-m = np.mean(np.abs(fs),0)
-
-print('noise ratio before and after fft: ', np.mean(std1)/np.mean(std2))
-
-# plt.figure()
-# plt.plot(m)
-# plt.title('mean after fft')
-
-# plt.figure()
-# plt.plot(std2)
-# plt.title('std after fft')
-
+plt.figure()
+plt.plot([256,512,1024,1560,2048,4096],ratios_std)
+plt.title('noise ratio freq/time ')
+plt.show()
+print('FFT does averaging, so noise decrease in the scale of sqrt(Length)')
+plt.figure()
+plt.plot([256,512,1024,1560,2048,4096],ratios_signal)
+plt.title('signal level in freq')
+plt.show()
 
 
